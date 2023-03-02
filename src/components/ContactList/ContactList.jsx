@@ -24,7 +24,6 @@ const ContactList = () => {
   };
 
   const contacts = useSelector(getContactList);
-  console.log(contacts);
   const filterByName = () => {
     return contacts.filter(contact => {
       return contact.name.toLowerCase().includes(filter.toLowerCase());
