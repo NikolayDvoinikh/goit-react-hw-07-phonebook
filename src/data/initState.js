@@ -1,1 +1,4 @@
-export const initState = { name: '', number: '' };
+export const initState = {
+  name: '',
+  phone: '',
+};

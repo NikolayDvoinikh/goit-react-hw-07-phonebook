@@ -1,1 +1,1 @@
-export const getContactList = store => store.contacts;
+export const getContactList = ({ contacts }) => contacts.contacts;
