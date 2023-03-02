@@ -1,6 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAddContact } from 'Redux/contacts/contacts-operations';
-import { getContactList } from 'Redux/contacts/contacts-selectors';
+import {
+  getContactList,
+  selectLoader,
+} from 'Redux/contacts/contacts-selectors';
 import { useState } from 'react';
 import { initState } from 'data/initState';
 
@@ -11,6 +14,7 @@ const ContactForm = () => {
   const { name, phone } = state;
 
   const contacts = useSelector(getContactList);
+  const loading = useSelector(selectLoader);
   const dispatch = useDispatch();
 
   const handleChange = ({ target }) => {
@@ -32,8 +36,11 @@ const ContactForm = () => {
       return alert(`${name} is already in contacts`);
     }
     dispatch(fetchAddContact({ ...state, createdAt }));
+    console.log(fetchAddContact());
     setState({ ...initState });
   };
+
+  const isActiveBtn = state.name && state.phone ? loading : true;
 
   return (
     <form className={css.form} onSubmit={handleSubmit}>
@@ -63,7 +70,7 @@ const ContactForm = () => {
           required
         />
       </label>
-      <button className={css.btnSubmit} type="submit">
+      <button className={css.btnSubmit} type="submit" disabled={isActiveBtn}>
         Add contact
       </button>
     </form>

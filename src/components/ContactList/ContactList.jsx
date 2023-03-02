@@ -7,13 +7,11 @@ import {
   fetchDeleteContact,
 } from 'Redux/contacts/contacts-operations';
 import { useEffect } from 'react';
-import { getContactList } from 'Redux/contacts/contacts-selectors';
-import { getFilter } from 'Redux/filter/filter-selectors';
+import { filterByName, selectLoader } from 'Redux/contacts/contacts-selectors';
 
 const ContactList = () => {
-  const filter = useSelector(getFilter);
-
   const dispatch = useDispatch();
+  const loading = useSelector(selectLoader);
 
   useEffect(() => {
     dispatch(fetchAllContacts());
@@ -23,24 +21,18 @@ const ContactList = () => {
     dispatch(fetchDeleteContact(id));
   };
 
-  const contacts = useSelector(getContactList);
-  const filterByName = () => {
-    return contacts.filter(contact => {
-      return contact.name.toLowerCase().includes(filter.toLowerCase());
-    });
-  };
-
-  const filteredList = filterByName();
+  const userList = useSelector(filterByName);
 
   return (
     <ul className={css.listContacts}>
-      {filteredList.map(({ id, name, phone }) => (
+      {userList.map(({ id, name, phone }) => (
         <li key={id} className={css.item}>
           <span className={css.text}>
             {name}: {phone}
           </span>
           <button
             id={id}
+            disabled={loading}
             className={css.btnDelete}
             type="button"
             onClick={() => handleDelete(id)}

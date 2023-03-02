@@ -9,8 +9,8 @@ export const apiGetAllContacts = async () => {
   return data;
 };
 
-export const apiAddContact = async data => {
-  const { data: result } = await instancePhoneBook.post('/', data);
+export const apiAddContact = async contact => {
+  const result = await instancePhoneBook.post('/', contact);
   return result;
 };
 
