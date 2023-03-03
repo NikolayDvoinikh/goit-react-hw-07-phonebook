@@ -26,7 +26,6 @@ const ContactForm = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-
     const createdAt = new Date();
     if (
       contacts.filter(
@@ -36,11 +35,10 @@ const ContactForm = () => {
       return alert(`${name} is already in contacts`);
     }
     dispatch(fetchAddContact({ ...state, createdAt }));
-    console.log(fetchAddContact());
-    setState({ ...initState });
+    // setState({ ...initState });
   };
 
-  const isActiveBtn = state.name && state.phone ? loading : true;
+  const isActiveBtn = state.name && state.phone ? false : true;
 
   return (
     <form className={css.form} onSubmit={handleSubmit}>
@@ -71,7 +69,13 @@ const ContactForm = () => {
         />
       </label>
       <button className={css.btnSubmit} type="submit" disabled={isActiveBtn}>
-        Add contact
+        {!loading ? (
+          'Add contact '
+        ) : (
+          <div className={css.loadBtn}>
+            <div className={css.loading}></div>Loading...
+          </div>
+        )}
       </button>
     </form>
   );
