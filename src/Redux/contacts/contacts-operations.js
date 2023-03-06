@@ -13,7 +13,7 @@ export const fetchAllContacts = createAsyncThunk(
       const data = await apiGetAllContacts();
       return data;
     } catch ({ response }) {
-      return rejectWithValue(response.data.message);
+      return rejectWithValue(response.data);
     }
   }
 );
@@ -22,11 +22,10 @@ export const fetchAddContact = createAsyncThunk(
   'contacts/add',
   async (contact, { rejectWithValue }) => {
     try {
-      const { data: result, status } = await apiAddContact(contact);
-      console.log(status);
+      const { data: result } = await apiAddContact(contact);
       return result;
     } catch ({ response }) {
-      return rejectWithValue(response.data.message);
+      return rejectWithValue(response);
     }
   }
 );
@@ -38,7 +37,7 @@ export const fetchDeleteContact = createAsyncThunk(
       await apiDeleteContact(id);
       return id;
     } catch ({ response }) {
-      return rejectWithValue(response.data.message);
+      return rejectWithValue(response.data);
     }
   }
 );

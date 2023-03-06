@@ -23,26 +23,23 @@ const ContactList = () => {
 
   const userList = useSelector(filterByName);
 
-  return (
-    <ul className={css.listContacts}>
-      {userList.map(({ id, name, phone }) => (
-        <li key={id} className={css.item}>
-          <span className={css.text}>
-            {name}: {phone}
-          </span>
-          <button
-            id={id}
-            disabled={loading}
-            className={css.btnDelete}
-            type="button"
-            onClick={() => handleDelete(id)}
-          >
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
-  );
+  const elements = userList.map(({ id, name, phone }) => (
+    <li key={id} className={css.item}>
+      <span className={css.text}>
+        {name}: {phone}
+      </span>
+      <button
+        id={id}
+        disabled={loading}
+        className={css.btnDelete}
+        type="button"
+        onClick={() => handleDelete(id)}
+      >
+        Delete
+      </button>
+    </li>
+  ));
+  return <>{<ul className={css.listContacts}>{elements}</ul>}</>;
 };
 
 export default ContactList;

@@ -7,3 +7,4 @@ export const filterByName = ({ contacts, filter }) => {
 };
 
 export const selectLoader = ({ contacts }) => contacts.isLoading;
+export const selectError = ({ contacts }) => contacts.error;

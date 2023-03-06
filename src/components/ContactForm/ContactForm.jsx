@@ -3,8 +3,9 @@ import { fetchAddContact } from 'Redux/contacts/contacts-operations';
 import {
   getContactList,
   selectLoader,
+  selectError,
 } from 'Redux/contacts/contacts-selectors';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { initState } from 'data/initState';
 
 import css from './ContactForm.module.css';
@@ -15,6 +16,7 @@ const ContactForm = () => {
 
   const contacts = useSelector(getContactList);
   const loading = useSelector(selectLoader);
+  const error = useSelector(selectError);
   const dispatch = useDispatch();
 
   const handleChange = ({ target }) => {
@@ -35,10 +37,13 @@ const ContactForm = () => {
       return alert(`${name} is already in contacts`);
     }
     dispatch(fetchAddContact({ ...state, createdAt }));
-    // setState({ ...initState });
   };
 
-  const isActiveBtn = state.name && state.phone ? false : true;
+  useEffect(() => {
+    !loading && !error && setState({ ...initState });
+  }, [loading, error]);
+
+  const isActiveBtn = state.name && state.phone ? loading : true;
 
   return (
     <form className={css.form} onSubmit={handleSubmit}>
